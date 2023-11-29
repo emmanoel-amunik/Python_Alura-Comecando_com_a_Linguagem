@@ -1,16 +1,27 @@
 import random
 
-
 print("*" * 29)
 print("Welcome to the Guessing game!")
 print("*" * 29)
 
+total_attempts = 0
+secret_number = random.randrange(1, 101)
+score = 1000
 
-for attempts in range(3):
+level = int(input("What level of difficulty?\n (1) Easy\n "
+                  "(2) Medium\n (3) Hard\n  "))
 
-    secret_number = random.randrange(1, 101)
+if level == 1:
+    total_attempts = 20
+elif level == 2:
+    total_attempts = 10
+elif level == 3:
+    total_attempts = 5
 
-    print(f"Attempt {attempts+1} of 3")
+
+for attempts in range(total_attempts):
+
+    print(f"Attempt {attempts + 1} of {total_attempts}")
     user_kick = int(input("Type a number: "))
 
     if user_kick < 1 or user_kick > 100:
@@ -21,17 +32,20 @@ for attempts in range(3):
     greater = user_kick > secret_number
     less = user_kick < secret_number
 
-    print("You entered: ", user_kick)
+    print(f"You entered: {user_kick}")
 
     if right:
-        print("You're right!!!")
+        print(f"You're right!!! And your score is {score}")
         break
     else:
         if greater:
-            print("You're wrong. Your guess was greater than the secret number. ")
-        if less:
+            print("You're wrong. Your guess was greater than the secret number.")
+        elif less:
             print("You're wrong. Your guess was less than the secret number.")
-    print("*" * 15)
 
+        lost_points = abs(secret_number - user_kick)
+        score -= lost_points
+
+    print("*" * 60)
 
 print("End Game")
